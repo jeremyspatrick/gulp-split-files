@@ -10,7 +10,7 @@ var through2 = require("through2"),
         fileNameRegExpObj: {
             start: "\\/\\*splitfilename=",
             end: "\\*\\/",
-            filename: "([\\w\\.]+)"
+            filename: "([\\w\\.\\-]+)"
         },
         getFileNameRegExp: function () {
             var fnreo = splitFiles.fileNameRegExpObj;
