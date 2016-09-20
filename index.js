@@ -17,13 +17,10 @@ var through2 = require("through2"),
 
             return new RegExp(fnreo.start + fnreo.filename + fnreo.end, "g");
         },
-        removeSrcMapComment: function (newFileContent) {
-            return newFileContent.replace(/(\/\*#)([\s]+)?(sourceMappingURL=)([\w\-\.]+)([\s]+)?(\*\/)/g, "");
-        },
         removeNewFileNameFromFileContent: function (newFileContent) {
             var fileNameRegExp = splitFiles.getFileNameRegExp();
 
-            return splitFiles.removeSrcMapComment(newFileContent).replace(fileNameRegExp, "").trim();
+            return newFileContent.replace(fileNameRegExp, "").trim();
         },
         removeNewFileNameComment: function (fileNameStr) {
             var fnreo = splitFiles.fileNameRegExpObj,
