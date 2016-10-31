@@ -47,5 +47,6 @@ Temporary Items
 .apdisk
 
 node_modules
-report
+platoReport
+testDest
 .idea

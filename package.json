@@ -4,12 +4,21 @@
     "description": "split files",
     "main": "index.js",
     "dependencies": {
+        "gulp": "^3.9.1",
         "gulp-util": "^3.0.7",
         "through2": "^2.0.1"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "event-stream": "^3.3.4",
+        "gulp-cccp": "^0.1.1",
+        "gulp-rimraf": "^0.2.0",
+        "gulp-util": "^3.0.7",
+        "mocha": "^3.1.0",
+        "vinyl": "^2.0.0"
+    },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "./node_modules/.bin/mocha --reporter spec"
     },
     "author": "Petter Ahlberg",
     "license": "MIT"
