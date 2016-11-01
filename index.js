@@ -3,7 +3,7 @@
 "use strict";
 
 var through2 = require("through2"),
-    gulpUtil = require("gulp-util"),
+    File = require('vinyl'),
     path = require("path"),
 
     splitFiles = {
@@ -58,7 +58,7 @@ var through2 = require("through2"),
             var trimmedNewFileContent = splitFiles.removeNewFileNameFromFileContent(newFileContent),
                 createFileOptions = splitFiles.getCreateFileOptions(file, index, newFileContent, trimmedNewFileContent);
 
-            stream.push(new gulpUtil.File(createFileOptions));
+            stream.push(new File(createFileOptions));
         },
         createNewFiles: function (stream, newFiles, file) {
             newFiles.forEach(function (newFileContent, index) {

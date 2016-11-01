@@ -3,8 +3,6 @@
 "use strict";
 
 var gulp = require("gulp"),
-    rimraf = require("gulp-rimraf"),
-    splitFiles = require("./index"),
     cccp = require("gulp-cccp"),
 
     cccpConfig = {
@@ -15,18 +13,12 @@ var gulp = require("gulp"),
             "!node_modules/**",
             "!platoReport/**"
         ],
-        complexityCheck: ["*.js"]
-    },
-    gulpTasks = {
-        run: function (tasksArray) {
-            console.log(tasksArray);
-
-            return gulp.start(tasksArray);
-        }
+        complexityCheck: [
+            "index.js",
+            "test/**/*.js"
+        ]
     };
 
 cccp(cccpConfig);
 
 gulp.task("default", ["cccp"]);
-
-module.exports = gulpTasks;
