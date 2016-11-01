@@ -14,8 +14,8 @@ var gulp = require("gulp"),
             "!platoReport/**"
         ],
         complexityCheck: [
-            "*.js",
-            "!gulpfile.js"
+            "index.js",
+            "test/**/*.js"
         ]
     };
 

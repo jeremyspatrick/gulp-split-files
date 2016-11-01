@@ -15,6 +15,14 @@ var splitFiles = require("../index"),
                 path: fileName,
                 contents: new Buffer(fileContent)
             });
+        },
+        getTestSplit: function (fileName, fileContent) {
+            var fakeFile = testUtil.createFakeFile(fileName, fileContent),
+                split = splitFiles();
+
+            split.write(fakeFile);
+
+            return split;
         }
     };
 
@@ -30,10 +38,7 @@ describe("Simple split", function () {
     describe("Should split the file '" + fileName + "' in two new files.", function () {
         it("should deliver a file stream containing two files (" + newfileNames.join(" & ") + ")", function (done) {
 
-            var fakeFile = testUtil.createFakeFile(fileName, fileContent),
-                split = splitFiles();
-
-            split.write(fakeFile);
+            var split = testUtil.getTestSplit(fileName, fileContent);
 
             split.on("data", function (file) {
                 var filename = path.basename(file.path);
@@ -63,15 +68,12 @@ describe("Named split", function () {
         fileCount = 0,
         fileStream = fileContent.split("/*split*/");
 
-    describe("Split '" + fileName + "' into two new named files", function () {
+    describe("Split '" + fileName + "' into two new files", function () {
         it("Should deliver a file stream containing two files (" + newfileNames.join(" & ") + ")", function (done) {
 
             fileCount = 0;
 
-            var fakeFile = testUtil.createFakeFile(fileName, fileContent),
-                split = splitFiles();
-
-            split.write(fakeFile);
+            var split = testUtil.getTestSplit(fileName, fileContent);
 
             split.on("data", function (file) {
                 var filename = path.basename(file.path);
@@ -91,10 +93,7 @@ describe("Named split", function () {
 
             fileCount = 0;
 
-            var fakeFile = testUtil.createFakeFile(fileName, fileContent),
-                split = splitFiles();
-
-            split.write(fakeFile);
+            var split = testUtil.getTestSplit(fileName, fileContent);
 
             split.on("data", function (file) {
 
@@ -108,6 +107,40 @@ describe("Named split", function () {
                 }
             });
         });
+    });
+
+});
+
+describe("Mixed split", function () {
+
+    var testFile = "testfile3",
+        fileName = testFile + ".txt",
+        fileContent = "/*splitfilename=first.txt*/first/*split*/second/*split*//*splitfilename=third.txt*/third",
+        newfileNames = ["first.txt", testFile + "-1.txt", "third.txt"],
+        fileCount = 0,
+        fileStream = fileContent.split("/*split*/");
+
+    describe("Split '" + fileName + "' into three new files", function () {
+        it("Should deliver a file stream containing three files (" + newfileNames.join(" & ") + ")", function (done) {
+
+            fileCount = 0;
+
+            var split = testUtil.getTestSplit(fileName, fileContent);
+
+            split.on("data", function (file) {
+                var filename = path.basename(file.path);
+
+                assert(file.isBuffer());
+                assert.equal(filename, newfileNames[fileCount]);
+
+                fileCount += 1;
+
+                if (fileCount === fileStream.length) {
+                    done();
+                }
+            });
+        });
+
     });
 
 });
