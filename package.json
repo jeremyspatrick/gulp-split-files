@@ -1,6 +1,6 @@
 {
     "name": "gulp-split-files",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "split files",
     "main": "index.js",
     "repository": {
