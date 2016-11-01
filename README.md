@@ -16,14 +16,14 @@ A gulp plugin for manually splitting a set of files into even more files.
 
 **In your gulpfile:**
 <pre>
-´--javascript
+´
 var gulp = require("gulp"),
     splitFiles = require("gulp-split-files");
 
     gulp.task("split", function () {
     	return gulp.src("superMegaBigCss.css")
     		.pipe(splitFiles())
-    		.pipe(gulp.dest("path/to/dest"))
+    		.pipe(gulp.dest("path/to/dest"));
     });
 ´
 </pre>
@@ -61,7 +61,7 @@ This will produce two files:
 ´
 </pre>
 
-This will produce two files:
+This will produce three files:
 * first.css
 * superMegaBigCss-1.css
 * third.css
