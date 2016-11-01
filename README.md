@@ -4,19 +4,16 @@ A gulp plugin for manually splitting a set of files into even more files.
 ## Use
 
 **superMegaBigCss.css content:**
-<pre>
-´
+```css
  [lots of css stuff]
  /*split*/
  [lots more css stuff]
  /*split*/
  [even more css stuff]
-´
-</pre>
+```
 
 **In your gulpfile:**
-<pre>
-´
+```javascript
 var gulp = require("gulp"),
     splitFiles = require("gulp-split-files");
 
@@ -25,8 +22,7 @@ var gulp = require("gulp"),
     		.pipe(splitFiles())
     		.pipe(gulp.dest("path/to/dest"));
     });
-´
-</pre>
+```
 
 This will produce three files:
 * superMegaBigCss-0.css
@@ -35,22 +31,19 @@ This will produce three files:
 
 
 ## Name the new files
-<pre>
-´
+```css
  /*splitfilename=first.css*/
  [lots of css stuff]
  /*split*/
  /*splitfilename=second.css*/
  [lots more css stuff]
-´
-</pre>
+```
 
 This will produce two files:
 * first.css
 * second.css
 
-<pre>
-´
+```css
 /*splitfilename=first.css*/
 [lots of css stuff]
  /*split*/
@@ -58,8 +51,7 @@ This will produce two files:
  /*split*/
  /*splitfilename=third.css*/
  [even more css stuff]
-´
-</pre>
+```
 
 This will produce three files:
 * first.css
