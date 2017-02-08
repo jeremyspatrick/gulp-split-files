@@ -60,17 +60,26 @@ var through2 = require("through2"),
 
             stream.push(new File(createFileOptions));
         },
-        createNewFiles: function (stream, newFiles, file) {
+        createNewFiles: function (stream, file, newFiles) {
             newFiles.forEach(function (newFileContent, index) {
                 splitFiles.createNewFile(stream, file, newFileContent, index);
             });
         },
+        actions: {
+            pass: function (stream, file) {
+                stream.push(file);
+            },
+            split: function (stream, file, newFiles) {
+                splitFiles.createNewFiles(stream, file, newFiles);
+            }
+        },
         split: function (file, encoding, callback) {
             var contents = file.contents.toString(encoding),
                 newFiles = contents.split("/*split*/"),
-                stream = this;
+                stream = this,
+                action = (newFiles.length === 1) ? 'pass' : 'split';
 
-            splitFiles.createNewFiles(stream, newFiles, file);
+            splitFiles.actions[action](stream, file, newFiles);
 
             callback();
         }
