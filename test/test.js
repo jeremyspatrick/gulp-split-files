@@ -56,6 +56,28 @@ describe("Simple split", function () {
         });
     });
 
+    describe("If the split only generates one file skip the file count number suffix", function () {
+        it("Should not add a number suffix to the filename if the split results in only one file", function (done) {
+            var noSpitFileName = "noSplit.txt",
+                noSplitFileContent = "no split",
+                split = testUtil.getTestSplit(noSpitFileName, noSplitFileContent);
+
+            split.on("data", function (file) {
+                var filename = path.basename(file.path);
+
+                assert(file.isBuffer());
+                assert.equal(filename, noSpitFileName);
+                assert.equal(file.contents.toString('utf8'), noSplitFileContent);
+
+                fileCount += 1;
+
+                if (fileCount >= 1) {
+                    done();
+                }
+            });
+        });
+    });
+
 });
 
 describe("Named split", function () {
