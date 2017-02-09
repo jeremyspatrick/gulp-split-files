@@ -1,6 +1,6 @@
 {
     "name": "gulp-split-files",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "split files",
     "main": "index.js",
     "repository": {
@@ -18,7 +18,7 @@
         "mocha": "^3.1.0"
     },
     "scripts": {
-        "test": "./node_modules/.bin/mocha --reporter spec"
+        "test": "mocha"
     },
     "author": "Petter Ahlberg",
     "license": "MIT"
