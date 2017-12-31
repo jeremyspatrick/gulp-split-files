@@ -18,7 +18,7 @@
         "mocha": "^3.1.0"
     },
     "scripts": {
-        "test": "mocha"
+        "test": "gulp complexity && mocha"
     },
     "author": "Petter Ahlberg",
     "license": "MIT"
