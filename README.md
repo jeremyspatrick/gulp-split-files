@@ -5,23 +5,23 @@ A gulp plugin for manually splitting a set of files into even more files.
 
 **superMegaBigCss.css content:**
 ```css
- [lots of css stuff]
- /*split*/
- [lots more css stuff]
- /*split*/
- [even more css stuff]
+[lots of css stuff]
+/*split*/
+[lots more css stuff]
+/*split*/
+[even more css stuff]
 ```
 
 **In your gulpfile:**
-```javascript
-var gulp = require("gulp"),
-    splitFiles = require("gulp-split-files");
+```js
+const gulp = require("gulp");
+const splitFiles = require("gulp-split-files");
 
-    gulp.task("split", function () {
-    	return gulp.src("superMegaBigCss.css")
-    		.pipe(splitFiles())
-    		.pipe(gulp.dest("path/to/dest"));
-    });
+gulp.task("split", function () {
+    return gulp.src("superMegaBigCss.css")
+    .pipe(splitFiles())
+    .pipe(gulp.dest("path/to/dest"));
+});
 ```
 
 This will produce three files:
@@ -32,11 +32,11 @@ This will produce three files:
 
 ## Name the new files
 ```css
- /*splitfilename=first.css*/
- [lots of css stuff]
- /*split*/
- /*splitfilename=second.css*/
- [lots more css stuff]
+/*splitfilename=first.css*/
+[lots of css stuff]
+/*split*/
+/*splitfilename=second.css*/
+[lots more css stuff]
 ```
 
 This will produce two files:
@@ -46,11 +46,11 @@ This will produce two files:
 ```css
 /*splitfilename=first.css*/
 [lots of css stuff]
- /*split*/
- [lots more css stuff]
- /*split*/
- /*splitfilename=third.css*/
- [even more css stuff]
+/*split*/
+[lots more css stuff]
+/*split*/
+/*splitfilename=third.css*/
+[even more css stuff]
 ```
 
 This will produce three files:
