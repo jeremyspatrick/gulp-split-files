@@ -1,12 +1,14 @@
 /*jslint node: true*/
 
 "use strict";
+var fastChunkString = require('@shelf/fast-chunk-string');
+var through2 = require('through2');
+var path = require("path");
+var File = require('vinyl');
 
-var through2 = require("through2"),
-    File = require('vinyl'),
-    path = require("path"),
+var gSplitFiles = function(options /*{fileCount, fileSize} */){
 
-    splitFiles = {
+    var splitFiles = {
         fileNameRegExpObj: {
             start: "\\/\\*splitfilename=",
             end: "\\*\\/",
@@ -43,7 +45,7 @@ var through2 = require("through2"),
                 fileType = filePath.match(fileTypeRe).join(),
                 fileName = filePath.replace(fileTypeRe, "");
 
-            return fileName + "-" + index + fileType;
+            return fileName + "-" + (index + 1) + fileType;
         },
         getFilePath: function (file, index, newFileContent) {
             return splitFiles.getNewFileName(newFileContent) || splitFiles.getFileNameByIndex(file, index);
@@ -63,7 +65,7 @@ var through2 = require("through2"),
         createNewFiles: function (stream, file, newFiles) {
             newFiles.forEach(function (newFileContent, index) {
                 splitFiles.createNewFile(stream, file, newFileContent, index);
-            });
+            });  
         },
         actions: {
             pass: function (stream, file) {
@@ -73,18 +75,55 @@ var through2 = require("through2"),
                 splitFiles.createNewFiles(stream, file, newFiles);
             }
         },
-        split: function (file, encoding, callback) {
-            var contents = file.contents.toString(encoding),
-                newFiles = contents.split("/*split*/"),
-                stream = this,
-                action = (newFiles.length === 1) ? 'pass' : 'split';
+        run:function(file, encoding, callback){
+            var opts = options || {};
+            var contents = file.contents.toString(encoding);
+            var stream = this;
+            var newFiles = [];
+            //default behavior: use file contents to determine split
+            if(typeof options === 'undefined'){
+                newFiles = contents.split("/*split*/");
+            }
+            // split by fileSize with no more than filecount number of files (last file used as leftover)
+            else if(typeof opts.fileCount !== 'undefined' && typeof opts.fileSize !== 'undefined'){
+                var newFilesTemp = fastChunkString(contents, {size: opts.fileSize, unicodeAware: true});
+                if(newFilesTemp.length > opts.fileCount){
+                    var lastFile = "";
+                    var lastFileIndex = opts.fileCount - 1;
+    
+                    for(var i = 0; i< lastFileIndex; i++){
+                        newFiles.push(newFilesTemp[i]);
+                    }
+    
+                    for(var i = lastFileIndex; i< newFilesTemp.length; i++){
+                        lastFile = lastFile + newFilesTemp[i];
+                    }
+                    newFiles.push(lastFile);
+                }
+                else{
+                    newFiles = newFilesTemp;
+                }
+            }
+            // split by fileSize with however many number of files it takes
+            else if(typeof opts.fileSize !== 'undefined'){
+                newFiles = fastChunkString(contents, {size: opts.fileSize, unicodeAware: true});
+            }
+            // split into number of files ignoring fileSize (equal file sizes)
+            else if(typeof opts.fileCount !== 'undefined'){
+                newFiles = fastChunkString(contents, {size: contents.length/opts.fileCount, unicodeAware: true});
+            }
+            else{
+                throw "invalid options";
+            }
 
+            var action = (newFiles.length === 1) ? 'pass' : 'split';
             splitFiles.actions[action](stream, file, newFiles);
-
             callback();
-        }
-    };
 
-module.exports = function () {
-    return through2.obj(splitFiles.split);
-};
+        }
+    }
+    return through2.obj(splitFiles.run);
+
+}
+
+module.exports = gSplitFiles;

@@ -1,25 +1,62 @@
 {
+  "_from": "gulp-split-files",
+  "_id": "gulp-split-files@1.2.3",
+  "_inBundle": false,
+  "_integrity": "sha512-TWDOr+d025xVuHdqXgOxcu8UDM936LzRRFHarMVgTDnQQCpO1vzX1ZrwT33ygE2K5XLYrFbDjsm+nkdvM9nPIA==",
+  "_location": "/gulp-split-files",
+  "_phantomChildren": {
+    "clone-buffer": "1.0.0",
+    "cloneable-readable": "1.1.3",
+    "remove-trailing-separator": "1.1.0"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "gulp-split-files",
     "name": "gulp-split-files",
-    "version": "1.2.3",
-    "description": "split files",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/PetterBoozegunk/gulp-split-files.git"
-    },
-    "dependencies": {
-        "through2": "^2.0.1",
-        "vinyl": "^2.0.0"
-    },
-    "devDependencies": {
-        "gulp": "^3.9.1",
-        "gulp-cccp": "^0.1.1",
-        "chai": "^3.5.0",
-        "mocha": "^3.1.0"
-    },
-    "scripts": {
-        "test": "gulp complexity && mocha"
-    },
-    "author": "Petter Ahlberg",
-    "license": "MIT"
+    "escapedName": "gulp-split-files",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/gulp-split-files/-/gulp-split-files-1.2.3.tgz",
+  "_shasum": "f2d2b4809b6b4945e2499840011145995f099698",
+  "_spec": "gulp-split-files",
+  "_where": "C:\\csi\\Consumer Solutions\\Digital Banking\\App\\Build",
+  "author": {
+    "name": "Petter Ahlberg"
+  },
+  "bugs": {
+    "url": "https://github.com/PetterBoozegunk/gulp-split-files/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@shelf/fast-chunk-string": "^1.1.1",
+    "through2": "^2.0.1",
+    "vinyl": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "split files",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-cccp": "^0.1.1",
+    "mocha": "^3.1.0"
+  },
+  "homepage": "https://github.com/PetterBoozegunk/gulp-split-files#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "gulp-split-files",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetterBoozegunk/gulp-split-files.git"
+  },
+  "scripts": {
+    "test": "gulp complexity && mocha"
+  },
+  "version": "1.2.3"
 }
